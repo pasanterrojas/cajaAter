@@ -117,7 +117,9 @@
     .header-logo { height: 36px; width: auto; object-fit: contain; }
     .header-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.2); }
     .header-eyebrow { font-family: var(--f-sans); font-size: clamp(13px,1.8vw,18px); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--emerald-lt); }
-    .header-right { display: flex; gap: 4px; margin-left: auto; }
+    .header-right { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-wrap: wrap; justify-content: flex-end; }
+    .header-action-btn { font-family: var(--f-sans); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--emerald-lt); background: var(--emerald-lt); color: var(--petrol-dark); text-decoration: none; white-space: nowrap; transition: all 0.15s; }
+    .header-action-btn:hover { background: white; border-color: white; color: var(--petrol-dark); }
     .header-lang-btn { font-family: var(--f-sans); font-size: 11px; font-weight: 600; letter-spacing: 0.06em; padding: 4px 11px; border-radius: 20px; border: 1.5px solid rgba(255,255,255,0.2); background: transparent; color: rgba(255,255,255,0.55); cursor: pointer; transition: all 0.15s; }
     .header-lang-btn.active { background: var(--emerald-lt); color: var(--petrol-dark); border-color: var(--emerald-lt); }
     .header-lang-btn:not(.active):hover { border-color: rgba(255,255,255,0.5); color: white; }
@@ -271,7 +273,8 @@
     .quote-name { font-family: var(--f-sans); font-size: 17px; font-weight: 700; color: var(--petrol); letter-spacing: 0.01em; }
     .quote-role { font-family: var(--f-sans); font-size: 13px; color: var(--ink-muted); line-height: 1.5; }
     .quote-study-btn { margin-top: 36px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-    .study-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--petrol); color: white; font-family: var(--f-sans); font-size: 13px; font-weight: 600; padding: 11px 22px; border-radius: 7px; text-decoration: none; cursor: default; opacity: 0.55; border: none; letter-spacing: 0.02em; }
+    .study-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--petrol); color: white; font-family: var(--f-sans); font-size: 13px; font-weight: 600; padding: 11px 22px; border-radius: 7px; text-decoration: none; cursor: pointer; opacity: 1; border: none; letter-spacing: 0.02em; transition: background 0.18s, transform 0.15s; }
+    .study-btn:hover { background: var(--petrol-dark); transform: translateY(-1px); }
     .study-btn-note { font-size: 12px; color: var(--ink-muted); font-style: italic; }
 
     /* ── CARDS lazy ── */
@@ -369,9 +372,12 @@
       .results-count { text-align: left; }
       .page-header { min-height: 260px; }
       .hero-title { font-size: 22px; line-height: 1.25; }
-      .topbar { height: 44px; padding: 0 16px; }
+      .topbar { height: auto; min-height: 44px; padding: 8px 12px; }
+      .topbar-inner { gap: 10px; flex-wrap: wrap; }
       .header-logo { height: 26px; }
       .header-eyebrow { font-size: 11px; letter-spacing: 0.05em; }
+      .header-right { gap: 4px; }
+      .header-action-btn { font-size: 10px; padding: 4px 9px; }
       .header-intro { padding: 24px 16px 28px; }
     }
   </style>
@@ -392,6 +398,7 @@
     <div class="header-divider"></div>
     <div class="header-eyebrow" id="header-eyebrow">IICA · Herramientas ATER</div>
     <div class="header-right">
+      <a class="header-action-btn" id="solution-submit-btn" href="https://forms.gle/5JKkefg1ae1taBbB7" target="_blank" rel="noopener noreferrer">Inscribe tu solución</a>
       <button class="header-lang-btn active" data-lang="es">ES</button>
       <button class="header-lang-btn" data-lang="pt">PT</button>
       <button class="header-lang-btn" data-lang="en">EN</button>
@@ -491,11 +498,11 @@
       </div>
     </div>
     <div class="quote-study-btn">
-      <span class="study-btn">
+      <a class="study-btn" href="estudio-extension-rural-digital.pdf" target="_blank" rel="noopener noreferrer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
         <span id="quote-study-btn">Acceso al estudio</span>
-      </span>
-      <span class="study-btn-note" id="quote-study-note">Accede al estudio completo que dio origen a la herramienta. <em>(Próximamente disponible)</em></span>
+      </a>
+      <span class="study-btn-note" id="quote-study-note">Abre el estudio completo que dio origen a la herramienta.</span>
     </div>
   </div>
 
@@ -710,7 +717,8 @@ const UI = {
     quoteText: 'La caja de herramientas fue desarrollada para acercar extensionistas, instituciones y productores a las principales soluciones digitales orientadas a la ATER en el MERCOSUR ampliado. Nuestro objetivo fue transformar el estudio en una plataforma práctica, simple y accesible, capaz de apoyar la toma de decisiones, ampliar el acceso a la información y fortalecer la innovación y digitalización de la extensión rural en la región, así como apoyar a proyectos e instituciones que buscan implementar o fortalecer estrategias de ATER digital.',
     quoteRole: 'Gerente Desarrollo Territorial y Agricultura Familiar<br>Dirección de Cooperación Técnica — IICA',
     quoteStudyBtn: 'Acceso al estudio',
-    quoteStudyNote: 'Accede al estudio completo que dio origen a la herramienta. <em>(Próximamente disponible)</em>',
+    quoteStudyNote: 'Abre el estudio completo que dio origen a la herramienta.',
+    solutionSubmitBtn: 'Inscribe tu solución',
     flds: { acceso:'Acceso', momento:'Momento', canal:'Canal', alcance:'Alcance', dig:'Nivel digital', nat:'Naturaleza', cat:'Categoría org.', lang:'Idioma', wa:'WhatsApp', con:'Conectividad', ap:'Apertura', tax:'Taxonomía' },
     fgroups: { pais:'País', finalidad:'Finalidad', publico:'Público objetivo', acceso:'Acceso', naturaleza:'Naturaleza institucional', momento:'Momento productivo', alcance:'Alcance', taxonomia:'Taxonomía de la Herramienta', categoria:'Categoría de organización', idioma:'Idioma', whatsapp:'WhatsApp', conectividad:'Conectividad necesaria', digitalizacion:'Nivel de digitalización', apertura:'Apertura de la herramienta' }
   },
@@ -734,7 +742,8 @@ const UI = {
     quoteText: 'A caixa de ferramentas foi desenvolvida para aproximar extensionistas, instituições e produtores das principais soluções digitais voltadas à ATER no MERCOSUL ampliado. Nosso objetivo foi transformar o estudo em uma plataforma prática, simples e acessível, capaz de apoiar a tomada de decisões, ampliar o acesso à informação e fortalecer a inovação e a digitalização da extensão rural na região, bem como apoiar projetos e instituições que buscam implementar ou fortalecer estratégias de ATER digital.',
     quoteRole: 'Gerente de Desenvolvimento Territorial e Agricultura Familiar<br>Diretoria de Cooperação Técnica — IICA',
     quoteStudyBtn: 'Acesso ao estudo',
-    quoteStudyNote: 'Acesse o estudo completo que originou esta ferramenta. <em>(Em breve disponível)</em>',
+    quoteStudyNote: 'Abra o estudo completo que originou esta ferramenta.',
+    solutionSubmitBtn: 'Inscreva sua solução',
     flds: { acceso:'Acesso', momento:'Momento', canal:'Canal', alcance:'Abrangência', dig:'Nível digital', nat:'Natureza', cat:'Categoria org.', lang:'Idioma', wa:'WhatsApp', con:'Conectividade', ap:'Abertura', tax:'Taxonomia' },
     fgroups: { pais:'País', finalidad:'Finalidade', publico:'Público-alvo', acceso:'Acesso', naturaleza:'Natureza institucional', momento:'Momento produtivo', alcance:'Abrangência', taxonomia:'Taxonomia de la Herramienta', categoria:'Categoria da organização', idioma:'Idioma', whatsapp:'WhatsApp', conectividad:'Conectividade necessária', digitalizacion:'Nível de digitalização', apertura:'Abertura da ferramenta' }
   },
@@ -758,7 +767,8 @@ const UI = {
     quoteText: 'The toolbox was developed to bring extensionists, institutions, and producers closer to the main digital solutions oriented to ATER in the expanded MERCOSUR. Our goal was to transform the study into a practical, simple, and accessible platform, capable of supporting decision-making, expanding access to information, and strengthening innovation and digitalization of rural extension in the region, as well as supporting projects and institutions seeking to implement or strengthen digital ATER strategies.',
     quoteRole: 'Manager of Territorial Development and Family Agriculture<br>Technical Cooperation Directorate — IICA',
     quoteStudyBtn: 'Access the study',
-    quoteStudyNote: 'Access the complete study that gave rise to this tool. <em>(Coming soon)</em>',
+    quoteStudyNote: 'Open the complete study that gave rise to this tool.',
+    solutionSubmitBtn: 'Submit your solution',
     flds: { acceso:'Access', momento:'Stage', canal:'Channel', alcance:'Scope', dig:'Digital level', nat:'Institution', cat:'Org. category', lang:'Language', wa:'WhatsApp', con:'Connectivity', ap:'Openness', tax:'Taxonomy' },
     fgroups: { pais:'Country', finalidad:'Purpose', publico:'Audience', acceso:'Access', naturaleza:'Institution type', momento:'Productive stage', alcance:'Scope', taxonomia:'Taxonomy', categoria:'Org. category', idioma:'Language', whatsapp:'WhatsApp', conectividad:'Connectivity', digitalizacion:'Digital level', apertura:'Tool openness' }
   }
@@ -1618,6 +1628,8 @@ function applyUIStrings() {
   if (qsb) qsb.textContent = t('quoteStudyBtn');
   const qsn = document.getElementById('quote-study-note');
   if (qsn) qsn.innerHTML = t('quoteStudyNote');
+  const ssb = document.getElementById('solution-submit-btn');
+  if (ssb) ssb.textContent = t('solutionSubmitBtn');
   document.getElementById('lbl-bar').textContent = t('bar');
   document.getElementById('lbl-donut').textContent = t('donut');
   document.getElementById('lbl-treemap').textContent = t('treemap');
